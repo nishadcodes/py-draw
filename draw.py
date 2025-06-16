@@ -14,6 +14,8 @@ pen = turtle.Pen()
 pen.pencolor("black")
 color = turtle.Pen()
 color.pencolor("black")
+color.speed(0)
+color.ht()
 # Screen setup
 screen = turtle.Screen()
 screen.title("Sketchpad")
@@ -37,11 +39,12 @@ pen.sety(pen.ycor() - 20)
 pen.write("U key for pen up", font=("Arial", 8, "bold"))
 pen.sety(pen.ycor() - 20)
 pen.write("D key for pen down", font=("Arial", 8, "bold"))
+
 def colorinfo():
     color.penup()
-    color.goto(-screen.window_width()//2 + 15, -screen.window_height()//2 - 20)
-    color.write("Color =" + colorstate)
-    screen.ontimer(colorinfo, 50)
+    color.goto(-screen.window_width()//2 + 25, -screen.window_height()//2 + 40)
+    color.write("Color = " + colorstate)
+
 pen.home()
 pen.pendown()
 
@@ -64,19 +67,26 @@ def move_right():
 
 # Color changers
 def black():
+    global colorstate
     pen.pencolor("black")
-    colorstate = "Black"
     color.clear()
+    colorstate = "Black"
+    colorinfo()
 
 def orange():
+    global colorstate
     pen.pencolor("orange")
-    colorstate("Orange")
     color.clear()
+    colorstate = "Orange"
+    colorinfo()
 
 def eraser():
+    global colorstate
     pen.pencolor("white")
-    colorstate = "Erasing"
     color.clear()
+    colorstate = "Erasing"
+    colorinfo()
+
 # General funtions
 def clear():
     pen.clear()
@@ -85,12 +95,22 @@ def kill():
     sys.exit()
 
 def pup():
+    global colorstate
+    color.clear()
+    colorstate = "Pen Up"
+    colorinfo()
     pen.penup()
 
 def pdown():
-    pen.pendown
-# Key bindings
+    global colorstate
+    color.clear()
+    colorstate = "Pen Down"
+    colorinfo()
+    pen.pendown()
+
 colorinfo()
+
+# Key bindings
 screen.listen()
 screen.onkeypress(move_up, "Up")
 screen.onkeypress(move_down, "Down")
